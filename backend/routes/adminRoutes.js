@@ -1,51 +1,20 @@
 const express = require("express");
-
-const {
-    adminLogin,
-    getInventory,
-    updateInventory,
-    getAllOrders,
-    updateOrderStatus,
-    getAllUsers
-} = require("../controllers/adminController");
+const admin = require("../controllers/adminController");
+const { requireAdmin } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
+router.post("/login", admin.adminLogin);
 
-// =====================================================
-// ADMIN LOGIN
-// =====================================================
+// Everything below requires an admin token
+router.use(requireAdmin);
 
-router.post("/login", adminLogin);
-
-
-// =====================================================
-// CUSTOMERS
-// =====================================================
-
-router.get("/users", getAllUsers);
-
-
-// =====================================================
-// INVENTORY
-// =====================================================
-
-router.get("/inventory", getInventory);
-
-router.put("/inventory/:id", updateInventory);
-
-
-// =====================================================
-// ORDERS
-// =====================================================
-
-router.get("/orders", getAllOrders);
-
-router.put("/orders/:id/status", updateOrderStatus);
-
-
-// =====================================================
-// EXPORT
-// =====================================================
+router.get("/stats", admin.getStats);
+router.get("/users", admin.getAllUsers);
+router.get("/inventory", admin.getInventory);
+router.put("/inventory/:id", admin.updateInventory);
+router.get("/orders", admin.getAllOrders);
+router.get("/orders/:id", admin.getOrderDetail);
+router.put("/orders/:id/status", admin.updateOrderStatus);
 
 module.exports = router;

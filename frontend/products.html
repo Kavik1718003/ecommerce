@@ -1,235 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Cartiva - Products</title>
-
-    <!-- Common CSS -->
-    <link rel="stylesheet" href="css/style.css">
-
-    <!-- Products CSS -->
-    <link rel="stylesheet" href="css/products.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1d4ed8">
+    <meta name="description" content="Browse and filter the full Cartiva catalogue.">
+    <title>Shop all products - Cartiva</title>
+    <link rel="icon" href="image/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/components.js"></script>
 </head>
+<body data-page="products">
+    <div id="site-header"></div>
 
-
-<body>
-
-
-    <!-- =========================================
-         NAVBAR
-    ========================================== -->
-
-    <header class="navbar">
-
-        <div class="logo">
-            Cartiva
+    <main id="main">
+        <div class="page-head">
+            <div class="container">
+                <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Shop</span></nav>
+                <h1 id="shop-title">All products</h1>
+                <p id="shop-count" class="muted" aria-live="polite">&nbsp;</p>
+            </div>
         </div>
 
+        <div class="container section" style="padding-top:28px">
+            <div class="shop-layout">
+                <aside class="card filters" id="filters" aria-label="Filters">
+                    <div class="filter-group">
+                        <h3>Category</h3>
+                        <div class="radio-list" id="category-list"></div>
+                    </div>
+                    <div class="filter-group">
+                        <h3>Price (₹)</h3>
+                        <div class="price-inputs">
+                            <input class="input" id="min" type="number" min="0" inputmode="numeric" placeholder="Min" aria-label="Minimum price">
+                            <span>–</span>
+                            <input class="input" id="max" type="number" min="0" inputmode="numeric" placeholder="Max" aria-label="Maximum price">
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <div class="radio-list"><label><input type="checkbox" id="in-stock"> In stock only</label></div>
+                    </div>
+                    <button class="btn btn-ghost btn-block" id="clear-filters" type="button">Clear all filters</button>
+                </aside>
 
-        <nav>
-
-            <a href="index.html">
-                Home
-            </a>
-
-            <a href="products.html">
-                Products
-            </a>
-
-            <a href="cart.html">
-                Cart
-            </a>
-
-            <a href="orders.html">
-                Orders
-            </a>
-
-            <a href="profile.html">
-                Profile
-            </a>
-
-            <a href="login.html">
-                Logout
-            </a>
-
-        </nav>
-
-    </header>
-
-
-
-    <!-- =========================================
-         MAIN PRODUCTS SECTION
-    ========================================== -->
-
-    <main class="products-container">
-
-
-        <!-- =====================================
-             PAGE HEADER
-        ====================================== -->
-
-        <section class="products-header">
-
-            <h1>
-                Shop Products
-            </h1>
-
-            <p>
-                Discover products across electronics,
-                fashion, home, beauty, books and accessories.
-            </p>
-
-        </section>
-
-
-
-        <!-- =====================================
-             SEARCH AND CATEGORY FILTER
-        ====================================== -->
-
-        <section class="product-tools">
-
-
-            <!-- Search -->
-
-            <div class="search-box">
-
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Search products..."
-                    autocomplete="off"
-                >
-
+                <section aria-label="Products">
+                    <div class="toolbar">
+                        <button class="btn btn-ghost btn-sm filter-toggle" id="filter-toggle" type="button" aria-expanded="false"></button>
+                        <div class="row" style="margin-left:auto">
+                            <label for="sort" class="muted">Sort by</label>
+                            <select class="select" id="sort" style="width:auto">
+                                <option value="newest">Newest</option>
+                                <option value="price-asc">Price: low to high</option>
+                                <option value="price-desc">Price: high to low</option>
+                                <option value="discount">Biggest discount</option>
+                                <option value="name">Name A–Z</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chips" id="chips"></div>
+                    <div class="grid grid-products" id="grid"></div>
+                    <nav class="pagination" id="pagination" aria-label="Pagination"></nav>
+                </section>
             </div>
-
-
-
-            <!-- Category -->
-
-            <div class="category-box">
-
-                <select id="categoryFilter">
-
-                    <option value="all">
-                        All Categories
-                    </option>
-
-                    <option value="1">
-                        Electronics
-                    </option>
-
-                    <option value="2">
-                        Fashion
-                    </option>
-
-                    <option value="3">
-                        Home & Kitchen
-                    </option>
-
-                    <option value="4">
-                        Beauty
-                    </option>
-
-                    <option value="5">
-                        Books
-                    </option>
-
-                    <option value="6">
-                        Accessories
-                    </option>
-
-                </select>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =====================================
-             PRODUCT COUNT / INFORMATION
-        ====================================== -->
-
-        <section class="products-info">
-
-            <p id="productCount">
-                Loading products...
-            </p>
-
-        </section>
-
-
-
-        <!-- =====================================
-             PRODUCTS GRID
-        ====================================== -->
-
-        <section class="products-section">
-
-            <div
-                id="productsContainer"
-                class="products-grid"
-            >
-
-                <!--
-                    Products will be loaded
-                    dynamically using products.js
-                -->
-
-                <p class="loading-message">
-                    Loading products...
-                </p>
-
-            </div>
-
-        </section>
-
-
+        </div>
     </main>
 
-
-
-    <!-- =========================================
-         FOOTER
-    ========================================== -->
-
-    <footer class="footer">
-
-        <div class="footer-content">
-
-            <h2>
-                Cartiva
-            </h2>
-
-            <p>
-                E-Commerce & Inventory Management System
-            </p>
-
-            <p>
-                © 2026 Cartiva. All rights reserved.
-            </p>
-
-        </div>
-
-    </footer>
-
-
-
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================== -->
-
-    <script src="js/products.js"></script>
-
-
+    <div id="site-footer"></div>
+    <script src="js/shop.js"></script>
 </body>
-
 </html>

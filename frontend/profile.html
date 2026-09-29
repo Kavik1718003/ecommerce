@@ -1,75 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Cartiva - Profile</title>
-
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1d4ed8">
+    <meta name="description" content="Manage your account details.">
+    <title>My profile - Cartiva</title>
+    <link rel="icon" href="image/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/components.js"></script>
 </head>
-
-<body>
-
-    <header class="navbar">
-
-        <div class="logo">
-            Cartiva
+<body data-page="profile">
+    <div id="site-header"></div>
+    <main id="main">
+        <div class="page-head"><div class="container"><h1>My profile</h1><p>Manage your details, saved address and password.</p></div></div>
+        <div class="container section" style="padding-top:28px" id="profile-root">
+            <div class="skeleton" style="height:320px;border-radius:12px"></div>
         </div>
-
-        <nav>
-
-            <a href="products.html">
-                Products
-            </a>
-
-            <a href="cart.html">
-                Cart
-            </a>
-
-            <a href="orders.html">
-                Orders
-            </a>
-
-            <a href="profile.html">
-                Profile
-            </a>
-
-            <a href="#" onclick="logout()">
-                Logout
-            </a>
-
-        </nav>
-
-    </header>
-
-
-    <main class="products-container">
-
-        <h1>
-            My Profile
-        </h1>
-
-
-        <div id="profileContainer">
-
-        </div>
-
     </main>
-
-
+    <div id="site-footer"></div>
     <script src="js/profile.js"></script>
-
 </body>
-
 </html>
