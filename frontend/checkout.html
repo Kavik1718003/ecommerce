@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Cartiva - Checkout</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="logo">
+            Cartiva
+        </div>
+
+        <nav>
+
+            <a href="products.html">
+                Products
+            </a>
+
+            <a href="cart.html">
+                Cart
+            </a>
+
+            <a href="orders.html">
+                Orders
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <main class="products-container">
+
+        <h1>
+            Checkout
+        </h1>
+
+
+        <form id="checkoutForm">
+
+
+            <!-- ADDRESS -->
+
+            <div class="form-group">
+
+                <label for="address">
+                    Address
+                </label>
+
+                <textarea
+                    id="address"
+                    rows="4"
+                    placeholder="Enter your complete address"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- CITY -->
+
+            <div class="form-group">
+
+                <label for="city">
+                    City
+                </label>
+
+                <input
+                    type="text"
+                    id="city"
+                    placeholder="Enter city"
+                    required
+                >
+
+            </div>
+
+
+            <!-- STATE -->
+
+            <div class="form-group">
+
+                <label for="state">
+                    State
+                </label>
+
+                <input
+                    type="text"
+                    id="state"
+                    placeholder="Enter state"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PINCODE -->
+
+            <div class="form-group">
+
+                <label for="pincode">
+                    Pincode
+                </label>
+
+                <input
+                    type="text"
+                    id="pincode"
+                    placeholder="Enter pincode"
+                    maxlength="6"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PAYMENT -->
+
+            <div class="form-group">
+
+                <label for="paymentMethod">
+                    Payment Method
+                </label>
+
+                <select
+                    id="paymentMethod"
+                    required
+                >
+
+                    <option value="">
+                        Select Payment Method
+                    </option>
+
+                    <option value="Cash on Delivery">
+                        Cash on Delivery
+                    </option>
+
+                    <option value="UPI">
+                        UPI
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button type="submit">
+                Place Order
+            </button>
+
+
+            <p id="checkoutMessage"></p>
+
+
+        </form>
+
+    </main>
+
+
+    <script src="js/checkout.js"></script>
+
+</body>
+
+</html>

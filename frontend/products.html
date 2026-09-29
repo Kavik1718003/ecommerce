@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cartiva - Products</title>
+
+    <!-- Common CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Products CSS -->
+    <link rel="stylesheet" href="css/products.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         NAVBAR
+    ========================================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            Cartiva
+        </div>
+
+
+        <nav>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="products.html">
+                Products
+            </a>
+
+            <a href="cart.html">
+                Cart
+            </a>
+
+            <a href="orders.html">
+                Orders
+            </a>
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+            <a href="login.html">
+                Logout
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================================
+         MAIN PRODUCTS SECTION
+    ========================================== -->
+
+    <main class="products-container">
+
+
+        <!-- =====================================
+             PAGE HEADER
+        ====================================== -->
+
+        <section class="products-header">
+
+            <h1>
+                Shop Products
+            </h1>
+
+            <p>
+                Discover products across electronics,
+                fashion, home, beauty, books and accessories.
+            </p>
+
+        </section>
+
+
+
+        <!-- =====================================
+             SEARCH AND CATEGORY FILTER
+        ====================================== -->
+
+        <section class="product-tools">
+
+
+            <!-- Search -->
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search products..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+
+            <!-- Category -->
+
+            <div class="category-box">
+
+                <select id="categoryFilter">
+
+                    <option value="all">
+                        All Categories
+                    </option>
+
+                    <option value="1">
+                        Electronics
+                    </option>
+
+                    <option value="2">
+                        Fashion
+                    </option>
+
+                    <option value="3">
+                        Home & Kitchen
+                    </option>
+
+                    <option value="4">
+                        Beauty
+                    </option>
+
+                    <option value="5">
+                        Books
+                    </option>
+
+                    <option value="6">
+                        Accessories
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             PRODUCT COUNT / INFORMATION
+        ====================================== -->
+
+        <section class="products-info">
+
+            <p id="productCount">
+                Loading products...
+            </p>
+
+        </section>
+
+
+
+        <!-- =====================================
+             PRODUCTS GRID
+        ====================================== -->
+
+        <section class="products-section">
+
+            <div
+                id="productsContainer"
+                class="products-grid"
+            >
+
+                <!--
+                    Products will be loaded
+                    dynamically using products.js
+                -->
+
+                <p class="loading-message">
+                    Loading products...
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-content">
+
+            <h2>
+                Cartiva
+            </h2>
+
+            <p>
+                E-Commerce & Inventory Management System
+            </p>
+
+            <p>
+                © 2026 Cartiva. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script src="js/products.js"></script>
+
+
+</body>
+
+</html>

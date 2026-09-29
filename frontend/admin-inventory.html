@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Cartiva - Inventory Management</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+    <link rel="stylesheet"
+          href="css/admin.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- ===============================
+         NAVBAR
+    ================================ -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            Cartiva Admin
+        </div>
+
+
+        <nav>
+
+            <a href="admin-dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="admin-products.html">
+                Products
+            </a>
+
+            <a href="admin-inventory.html">
+                Inventory
+            </a>
+
+            <a href="admin-orders.html">
+                Orders
+            </a>
+
+            <a href="admin-users.html">
+                Customers
+            </a>
+
+            <a href="#" id="adminLogout">
+                Logout
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- ===============================
+         MAIN CONTENT
+    ================================ -->
+
+    <main class="admin-container">
+
+
+        <h1>
+            Inventory Management
+        </h1>
+
+
+        <p>
+            View and update product stock.
+        </p>
+
+
+        <!-- ===============================
+             MESSAGE
+        ================================ -->
+
+        <p id="inventoryMessage"></p>
+
+
+        <!-- ===============================
+             INVENTORY CONTAINER
+        ================================ -->
+
+        <section>
+
+            <div id="inventoryContainer">
+
+                <p>
+                    Loading inventory...
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ===============================
+         JAVASCRIPT
+    ================================ -->
+
+    <script src="js/admin.js"></script>
+
+    <script src="js/inventory.js"></script>
+
+
+</body>
+
+</html>

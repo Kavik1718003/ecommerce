@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cartiva - Admin Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/admin.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- ================================
+         ADMIN NAVBAR
+    ================================= -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            Cartiva Admin
+        </div>
+
+
+        <nav>
+
+            <a href="admin-dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="admin-products.html">
+                Products
+            </a>
+
+            <a href="admin-inventory.html">
+                Inventory
+            </a>
+
+            <a href="admin-orders.html">
+                Orders
+            </a>
+
+            <a href="admin-users.html">
+                Customers
+            </a>
+
+            <a href="#" id="adminLogout">
+                Logout
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- ================================
+         MAIN DASHBOARD
+    ================================= -->
+
+    <main class="admin-container">
+
+
+        <h1>
+            Admin Dashboard
+        </h1>
+
+
+        <p
+            class="admin-welcome"
+            id="adminWelcome">
+
+            Welcome, Admin
+
+        </p>
+
+
+
+        <!-- ================================
+             DASHBOARD CARDS
+        ================================= -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- PRODUCTS -->
+
+            <div class="dashboard-card">
+
+                <h2>
+                    Products
+                </h2>
+
+                <p id="productCount">
+                    Loading...
+                </p>
+
+                <a
+                    href="admin-products.html"
+                    class="admin-button">
+
+                    Manage Products
+
+                </a>
+
+            </div>
+
+
+
+            <!-- INVENTORY -->
+
+            <div class="dashboard-card">
+
+                <h2>
+                    Inventory
+                </h2>
+
+                <p id="inventoryCount">
+                    Loading...
+                </p>
+
+                <a
+                    href="admin-inventory.html"
+                    class="admin-button">
+
+                    Manage Inventory
+
+                </a>
+
+            </div>
+
+
+
+            <!-- ORDERS -->
+
+            <div class="dashboard-card">
+
+                <h2>
+                    Orders
+                </h2>
+
+                <p id="orderCount">
+                    Loading...
+                </p>
+
+                <a
+                    href="admin-orders.html"
+                    class="admin-button">
+
+                    Manage Orders
+
+                </a>
+
+            </div>
+
+
+
+            <!-- CUSTOMERS -->
+
+            <div class="dashboard-card">
+
+                <h2>
+                    Customers
+                </h2>
+
+                <p id="customerCount">
+                    Loading...
+                </p>
+
+                <a
+                    href="admin-users.html"
+                    class="admin-button">
+
+                    Manage Customers
+
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ================================
+             QUICK ACTIONS
+        ================================= -->
+
+        <section class="dashboard-card">
+
+            <h2>
+                Quick Actions
+            </h2>
+
+            <p>
+                Manage your Cartiva e-commerce
+                application from here.
+            </p>
+
+
+            <a
+                href="admin-products.html"
+                class="admin-button">
+
+                Add Product
+
+            </a>
+
+
+            <a
+                href="admin-inventory.html"
+                class="admin-button">
+
+                Update Stock
+
+            </a>
+
+
+            <a
+                href="admin-orders.html"
+                class="admin-button">
+
+                Manage Orders
+
+            </a>
+
+
+            <a
+                href="admin-users.html"
+                class="admin-button">
+
+                View Customers
+
+            </a>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ================================
+         JAVASCRIPT
+    ================================= -->
+
+    <script src="js/admin.js"></script>
+
+    <script src="js/admin-dashboard.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cartiva - Login</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body>
+
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <h1>Cartiva</h1>
+
+            <h2>Welcome Back</h2>
+
+            <p class="auth-subtitle">
+                Login to your account
+            </p>
+
+            <form id="loginForm">
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+                </div>
+
+                <!-- Login Button -->
+                <button type="submit" class="auth-button">
+                    Login
+                </button>
+
+                <!-- Message -->
+                <p id="loginMessage"></p>
+
+            </form>
+
+            <p class="auth-link">
+                Don't have an account?
+                <a href="register.html">Register</a>
+            </p>
+
+        </div>
+
+    </div>
+
+    <script src="js/auth.js"></script>
+
+</body>
+</html>
