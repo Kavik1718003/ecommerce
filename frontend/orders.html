@@ -1,75 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Cartiva - Orders</title>
-
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1d4ed8">
+    <meta name="description" content="Track your orders.">
+    <title>My orders - Cartiva</title>
+    <link rel="icon" href="image/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/components.js"></script>
 </head>
-
-<body>
-
-    <header class="navbar">
-
-        <div class="logo">
-            Cartiva
+<body data-page="orders">
+    <div id="site-header"></div>
+    <main id="main">
+        <div class="page-head"><div class="container"><h1>My orders</h1><p>Track, review and manage your purchases.</p></div></div>
+        <div class="container section" style="padding-top:28px" id="orders-root" aria-live="polite">
+            <div class="skeleton" style="height:220px;border-radius:12px"></div>
         </div>
-
-        <nav>
-
-            <a href="products.html">
-                Products
-            </a>
-
-            <a href="cart.html">
-                Cart
-            </a>
-
-            <a href="orders.html">
-                Orders
-            </a>
-
-            <a href="profile.html">
-                Profile
-            </a>
-
-        </nav>
-
-    </header>
-
-
-    <main class="products-container">
-
-        <h1>
-            My Orders
-        </h1>
-
-
-        <div id="ordersContainer">
-
-            <p>
-                Loading orders...
-            </p>
-
-        </div>
-
     </main>
-
-
+    <div id="site-footer"></div>
     <script src="js/orders.js"></script>
-
 </body>
-
 </html>

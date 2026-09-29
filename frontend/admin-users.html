@@ -1,114 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Cartiva - Customers</title>
-
-    <link rel="stylesheet"
-          href="css/style.css">
-
-    <link rel="stylesheet"
-          href="css/admin.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b1530">
+    <meta name="robots" content="noindex">
+    <title>Customers - Cartiva Admin</title>
+    <link rel="icon" href="image/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/components.js"></script>
 </head>
-
-
-<body>
-
-
-<!-- =====================================================
-     ADMIN NAVBAR
-===================================================== -->
-
-<header class="navbar">
-
-    <div class="logo">
-        Cartiva Admin
-    </div>
-
-
-    <nav>
-
-        <a href="admin-dashboard.html">
-            Dashboard
-        </a>
-
-        <a href="admin-products.html">
-            Products
-        </a>
-
-        <a href="admin-inventory.html">
-            Inventory
-        </a>
-
-        <a href="admin-orders.html">
-            Orders
-        </a>
-
-        <a href="admin-users.html">
-            Customers
-        </a>
-
-        <a href="#" id="adminLogout">
-            Logout
-        </a>
-
-    </nav>
-
-</header>
-
-
-
-<!-- =====================================================
-     CUSTOMERS SECTION
-===================================================== -->
-
-<main class="admin-container">
-
-    <h1>
-        Customer Management
-    </h1>
-
-
-    <p>
-        View registered Cartiva customers.
-    </p>
-
-
-    <p id="usersMessage"></p>
-
-
-    <section>
-
-        <div id="usersContainer">
-
-            <p>
-                Loading customers...
-            </p>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
-
-<script src="js/admin.js"></script>
-
-<script src="js/admin-users.js"></script>
-
-
+<body class="admin-body">
+    <div id="admin-root"></div>
+    <script src="js/admin-users.js"></script>
 </body>
-
 </html>

@@ -1,24 +1,16 @@
 const express = require("express");
-
-const {
-    getCart,
-    addToCart,
-    removeCartItem
-} = require("../controllers/cartController");
+const cart = require("../controllers/cartController");
+const { requireAuth } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
+// The cart always belongs to the logged-in user (from the token)
+router.use(requireAuth);
 
-// Get cart
-router.get("/:userId", getCart);
-
-
-// Add product
-router.post("/add", addToCart);
-
-
-// Remove product
-router.delete("/item/:id", removeCartItem);
-
+router.get("/", cart.getCart);
+router.delete("/", cart.clearCart);
+router.post("/items", cart.addToCart);
+router.put("/items/:id", cart.updateCartItem);
+router.delete("/items/:id", cart.removeCartItem);
 
 module.exports = router;

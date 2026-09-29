@@ -1,267 +1,117 @@
-const db = require("../config/db");
+const db = require("../config/db").promise();
+const { HttpError, int, shippingFor } = require("../middleware/validate");
 
+const money = (n) => Math.round(n * 100) / 100;
 
-// ===============================
-// GET USER CART
-// ===============================
+const CART_SQL = `
+    SELECT ci.id AS cart_item_id, p.id AS product_id, p.name, p.image, p.price, p.discount,
+           ROUND(p.price * (1 - p.discount / 100), 2) AS final_price, p.stock, ci.quantity
+    FROM cart c
+    JOIN cart_items ci ON ci.cart_id = c.id
+    JOIN products p ON p.id = ci.product_id
+    WHERE c.user_id = ?
+    ORDER BY ci.id DESC`;
 
-const getCart = (req, res) => {
+// Build the cart payload (lines + totals) for a user
+const loadCart = async (userId) => {
+    const [rows] = await db.query(CART_SQL, [userId]);
 
-    const userId = req.params.userId;
+    const items = rows.map((r) => ({
+        ...r,
+        price: Number(r.price),
+        discount: Number(r.discount),
+        final_price: Number(r.final_price),
+        line_total: money(Number(r.final_price) * r.quantity)
+    }));
 
-    const sql = `
-        SELECT
-            cart.id AS cart_id,
-            cart_items.id AS cart_item_id,
-            products.id AS product_id,
-            products.name,
-            products.price,
-            products.discount,
-            products.image,
-            cart_items.quantity
-        FROM cart
-        JOIN cart_items
-            ON cart.id = cart_items.cart_id
-        JOIN products
-            ON products.id = cart_items.product_id
-        WHERE cart.user_id = ?
-    `;
+    const subtotal = money(items.reduce((s, i) => s + i.price * i.quantity, 0));
+    const total = money(items.reduce((s, i) => s + i.line_total, 0));
 
-    db.query(
-        sql,
-        [userId],
-        (err, results) => {
+    const shipping = shippingFor(total);
 
-            if (err) {
-
-                return res.status(500).json({
-                    message: "Failed to fetch cart",
-                    error: err.message
-                });
-            }
-
-            res.status(200).json({
-                message: "Cart fetched successfully",
-                cart: results
-            });
-
+    return {
+        cart: items,
+        summary: {
+            items: items.reduce((s, i) => s + i.quantity, 0),
+            subtotal,
+            savings: money(subtotal - total),
+            total,
+            shipping,
+            grandTotal: money(total + shipping)
         }
-    );
+    };
 };
 
+// GET /api/cart
+const getCart = async (req, res) => {
+    res.json({ message: "Cart fetched successfully", ...(await loadCart(req.user.id)) });
+};
 
-// ===============================
-// ADD TO CART
-// ===============================
+// POST /api/cart/items  { productId, quantity }
+const addToCart = async (req, res) => {
+    const productId = int(req.body.productId, { min: 0 });
+    const quantity = int(req.body.quantity, { min: 1, max: 99, fallback: 1 });
 
-const addToCart = (req, res) => {
+    const [products] = await db.query("SELECT id, stock FROM products WHERE id = ?", [productId]);
+    if (!products.length) throw new HttpError(404, "Product not found");
 
-    const { userId, productId, quantity } =
-        req.body;
-
-    if (!userId || !productId || !quantity) {
-
-        return res.status(400).json({
-            message:
-                "userId, productId and quantity are required"
-        });
+    let [carts] = await db.query("SELECT id FROM cart WHERE user_id = ?", [req.user.id]);
+    let cartId = carts[0] && carts[0].id;
+    if (!cartId) {
+        const [r] = await db.query("INSERT INTO cart (user_id) VALUES (?)", [req.user.id]);
+        cartId = r.insertId;
     }
 
-    const findCartSql =
-        "SELECT id FROM cart WHERE user_id = ?";
+    const [existing] = await db.query(
+        "SELECT id, quantity FROM cart_items WHERE cart_id = ? AND product_id = ?", [cartId, productId]);
+    const newQty = (existing[0] ? existing[0].quantity : 0) + quantity;
 
-    db.query(
-        findCartSql,
-        [userId],
-        (err, cartResults) => {
+    if (newQty > products[0].stock) {
+        throw new HttpError(409, products[0].stock === 0
+            ? "This product is out of stock"
+            : `Only ${products[0].stock} left in stock`);
+    }
 
-            if (err) {
+    if (existing[0]) {
+        await db.query("UPDATE cart_items SET quantity = ? WHERE id = ?", [newQty, existing[0].id]);
+    } else {
+        await db.query("INSERT INTO cart_items (cart_id, product_id, quantity) VALUES (?, ?, ?)", [cartId, productId, quantity]);
+    }
 
-                return res.status(500).json({
-                    message: "Database error",
-                    error: err.message
-                });
-            }
-
-            const createOrUseCart = () => {
-
-                const cartId =
-                    cartResults.length > 0
-                        ? cartResults[0].id
-                        : null;
-
-                if (cartId) {
-
-                    insertCartItem(cartId);
-
-                } else {
-
-                    const createCartSql =
-                        "INSERT INTO cart (user_id) VALUES (?)";
-
-                    db.query(
-                        createCartSql,
-                        [userId],
-                        (err, result) => {
-
-                            if (err) {
-
-                                return res.status(500).json({
-                                    message:
-                                        "Failed to create cart",
-                                    error: err.message
-                                });
-                            }
-
-                            insertCartItem(
-                                result.insertId
-                            );
-                        }
-                    );
-                }
-            };
-
-
-            const insertCartItem = (cartId) => {
-
-                const checkItemSql = `
-                    SELECT id, quantity
-                    FROM cart_items
-                    WHERE cart_id = ?
-                    AND product_id = ?
-                `;
-
-                db.query(
-                    checkItemSql,
-                    [cartId, productId],
-                    (err, itemResults) => {
-
-                        if (err) {
-
-                            return res.status(500).json({
-                                message:
-                                    "Database error",
-                                error: err.message
-                            });
-                        }
-
-                        if (itemResults.length > 0) {
-
-                            const newQuantity =
-                                itemResults[0].quantity +
-                                Number(quantity);
-
-                            const updateSql = `
-                                UPDATE cart_items
-                                SET quantity = ?
-                                WHERE id = ?
-                            `;
-
-                            db.query(
-                                updateSql,
-                                [
-                                    newQuantity,
-                                    itemResults[0].id
-                                ],
-                                (err) => {
-
-                                    if (err) {
-
-                                        return res.status(500).json({
-                                            message:
-                                                "Failed to update cart",
-                                            error: err.message
-                                        });
-                                    }
-
-                                    res.status(200).json({
-                                        message:
-                                            "Cart updated successfully"
-                                    });
-                                }
-                            );
-
-                        } else {
-
-                            const insertSql = `
-                                INSERT INTO cart_items
-                                (cart_id, product_id, quantity)
-                                VALUES (?, ?, ?)
-                            `;
-
-                            db.query(
-                                insertSql,
-                                [
-                                    cartId,
-                                    productId,
-                                    quantity
-                                ],
-                                (err) => {
-
-                                    if (err) {
-
-                                        return res.status(500).json({
-                                            message:
-                                                "Failed to add item",
-                                            error: err.message
-                                        });
-                                    }
-
-                                    res.status(201).json({
-                                        message:
-                                            "Product added to cart"
-                                    });
-                                }
-                            );
-                        }
-
-                    }
-                );
-            };
-
-
-            createOrUseCart();
-
-        }
-    );
+    res.status(201).json({ message: "Product added to cart", ...(await loadCart(req.user.id)) });
 };
 
+// PUT /api/cart/items/:id  { quantity }
+const updateCartItem = async (req, res) => {
+    const quantity = int(req.body.quantity, { min: 1, max: 99, fallback: 0 });
+    if (!quantity) throw new HttpError(400, "Quantity must be at least 1");
 
-// ===============================
-// REMOVE CART ITEM
-// ===============================
+    const [rows] = await db.query(
+        `SELECT ci.id, p.stock FROM cart_items ci
+         JOIN cart c ON c.id = ci.cart_id JOIN products p ON p.id = ci.product_id
+         WHERE ci.id = ? AND c.user_id = ?`, [req.params.id, req.user.id]);
+    if (!rows.length) throw new HttpError(404, "Cart item not found");
+    if (quantity > rows[0].stock) throw new HttpError(409, `Only ${rows[0].stock} left in stock`);
 
-const removeCartItem = (req, res) => {
-
-    const cartItemId = req.params.id;
-
-    const sql =
-        "DELETE FROM cart_items WHERE id = ?";
-
-    db.query(
-        sql,
-        [cartItemId],
-        (err) => {
-
-            if (err) {
-
-                return res.status(500).json({
-                    message: "Failed to remove cart item",
-                    error: err.message
-                });
-            }
-
-            res.status(200).json({
-                message: "Cart item removed"
-            });
-
-        }
-    );
+    await db.query("UPDATE cart_items SET quantity = ? WHERE id = ?", [quantity, rows[0].id]);
+    res.json({ message: "Cart updated", ...(await loadCart(req.user.id)) });
 };
 
+// DELETE /api/cart/items/:id
+const removeCartItem = async (req, res) => {
+    const [r] = await db.query(
+        `DELETE ci FROM cart_items ci JOIN cart c ON c.id = ci.cart_id
+         WHERE ci.id = ? AND c.user_id = ?`, [req.params.id, req.user.id]);
+    if (!r.affectedRows) throw new HttpError(404, "Cart item not found");
 
-module.exports = {
-    getCart,
-    addToCart,
-    removeCartItem
+    res.json({ message: "Item removed from cart", ...(await loadCart(req.user.id)) });
 };
+
+// DELETE /api/cart
+const clearCart = async (req, res) => {
+    await db.query(
+        "DELETE ci FROM cart_items ci JOIN cart c ON c.id = ci.cart_id WHERE c.user_id = ?", [req.user.id]);
+    res.json({ message: "Cart cleared", ...(await loadCart(req.user.id)) });
+};
+
+module.exports = { getCart, addToCart, updateCartItem, removeCartItem, clearCart };

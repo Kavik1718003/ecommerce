@@ -1,128 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <title>Cartiva - Manage Orders</title>
-
-    <link rel="stylesheet"
-        href="css/style.css">
-
-    <link rel="stylesheet"
-        href="css/admin.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b1530">
+    <meta name="robots" content="noindex">
+    <title>Orders - Cartiva Admin</title>
+    <link rel="icon" href="image/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/components.js"></script>
 </head>
-
-
-<body>
-
-
-    <!-- =====================================================
-         ADMIN NAVBAR
-    ====================================================== -->
-
-    <header class="navbar">
-
-        <div class="logo">
-            Cartiva Admin
-        </div>
-
-
-        <nav>
-
-            <a href="admin-dashboard.html">
-                Dashboard
-            </a>
-
-            <a href="admin-products.html">
-                Products
-            </a>
-
-            <a href="admin-inventory.html">
-                Inventory
-            </a>
-
-            <a href="admin-orders.html">
-                Orders
-            </a>
-
-            <a href="admin-users.html">
-                Customers
-            </a>
-
-            <a href="#" id="adminLogout">
-                Logout
-            </a>
-
-        </nav>
-
-    </header>
-
-
-
-    <!-- =====================================================
-         MAIN CONTENT
-    ====================================================== -->
-
-    <main class="admin-container">
-
-
-        <h1>
-            Manage Orders
-        </h1>
-
-
-        <p class="admin-welcome">
-            View customer orders and update order status.
-        </p>
-
-
-        <!-- =================================================
-             ORDER MESSAGE
-        ================================================== -->
-
-        <p id="orderMessage"
-            class="admin-message">
-        </p>
-
-
-
-        <!-- =================================================
-             ORDERS CONTAINER
-        ================================================== -->
-
-        <section>
-
-            <div id="adminOrdersContainer"
-                class="dashboard-grid">
-
-                <p>
-                    Loading orders...
-                </p>
-
-            </div>
-
-        </section>
-
-
-    </main>
-
-
-
-    <!-- =====================================================
-         JAVASCRIPT
-    ====================================================== -->
-
-    <script src="js/admin.js"></script>
-
+<body class="admin-body">
+    <div id="admin-root"></div>
     <script src="js/admin-orders.js"></script>
-
-
 </body>
-
 </html>

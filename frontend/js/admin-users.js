@@ -1,170 +1,27 @@
-// =====================================================
-// GET HTML ELEMENTS
-// =====================================================
+(function () {
+    const { esc, $, money } = UI;
+    const main = Shell.adminShell("users", "Customers");
+    if (!main) return;
 
-const usersContainer =
-    document.getElementById("usersContainer");
+    main.innerHTML = `
+        <div class="filter-bar"><input class="input grow" id="search" type="search" placeholder="Search by name or email" aria-label="Search customers"></div>
+        <div class="table-wrap"><table>
+            <thead><tr><th>Customer</th><th>Phone</th><th>Joined</th><th>Orders</th><th class="text-right">Total spent</th></tr></thead>
+            <tbody id="rows"><tr><td colspan="5"><div class="skeleton" style="height:120px"></div></td></tr></tbody>
+        </table></div>`;
 
-const usersMessage =
-    document.getElementById("usersMessage");
-
-
-// =====================================================
-// CHECK ADMIN LOGIN
-// =====================================================
-
-const savedAdmin =
-    localStorage.getItem("cartivaAdmin");
-
-if (!savedAdmin) {
-
-    window.location.href =
-        "admin-login.html";
-
-}
-
-
-// =====================================================
-// LOAD CUSTOMERS
-// =====================================================
-
-async function loadCustomers() {
-
-    try {
-
-        usersContainer.innerHTML =
-            "<p>Loading customers...</p>";
-
-
-        const response = await fetch(
-            `${API_URL}/admin/users`
-        );
-
-
-        const data =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            usersContainer.innerHTML = `
-                <p>
-                    ${data.message ||
-                    "Failed to load customers."}
-                </p>
-            `;
-
-            return;
-
+    async function load(search = "") {
+        try {
+            const d = await api.get("/admin/users" + (search ? "?search=" + encodeURIComponent(search) : ""));
+            $("#rows").innerHTML = d.customers.length ? d.customers.map((c) => `
+                <tr><td><strong>${esc(c.name)}</strong><span class="muted" style="display:block;font-size:.85rem">${esc(c.email)}</span></td>
+                    <td>${esc(c.phone || "—")}</td><td>${UI.formatDate(c.created_at)}</td><td>${c.order_count}</td>
+                    <td class="text-right"><strong>${money(c.total_spent)}</strong></td></tr>`).join("")
+                : `<tr><td colspan="5">${UI.emptyState({ iconName: "users", title: "No customers found", text: "Registered customers will appear here." })}</td></tr>`;
+        } catch (e) {
+            $("#rows").innerHTML = `<tr><td colspan="5">${UI.emptyState({ iconName: "alert", title: "Couldn't load customers", text: e.message })}</td></tr>`;
         }
-
-
-        displayCustomers(
-            data.customers
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Customer loading error:",
-            error
-        );
-
-
-        usersContainer.innerHTML = `
-            <p>
-                Unable to connect to server.
-            </p>
-        `;
-
     }
-
-}
-
-
-// =====================================================
-// DISPLAY CUSTOMERS
-// =====================================================
-
-function displayCustomers(customers) {
-
-    usersContainer.innerHTML = "";
-
-
-    if (
-        !customers ||
-        customers.length === 0
-    ) {
-
-        usersContainer.innerHTML = `
-            <p>
-                No customers registered yet.
-            </p>
-        `;
-
-        return;
-
-    }
-
-
-    customers.forEach((customer) => {
-
-        const customerCard =
-            document.createElement("div");
-
-
-        customerCard.className =
-            "dashboard-card";
-
-
-        customerCard.innerHTML = `
-
-            <h2>
-                ${customer.name}
-            </h2>
-
-            <p>
-                <strong>Customer ID:</strong>
-                ${customer.id}
-            </p>
-
-            <p>
-                <strong>Email:</strong>
-                ${customer.email}
-            </p>
-
-            <p>
-                <strong>Phone:</strong>
-                ${customer.phone}
-            </p>
-
-            <p>
-                <strong>Role:</strong>
-                ${customer.role}
-            </p>
-
-            <p>
-                <strong>Registered:</strong>
-                ${new Date(
-                    customer.created_at
-                ).toLocaleString()}
-            </p>
-
-        `;
-
-
-        usersContainer.appendChild(
-            customerCard
-        );
-
-    });
-
-}
-
-
-// =====================================================
-// LOAD CUSTOMERS WHEN PAGE OPENS
-// =====================================================
-
-loadCustomers();
+    $("#search").addEventListener("input", UI.debounce((e) => load(e.target.value.trim())));
+    load();
+})();

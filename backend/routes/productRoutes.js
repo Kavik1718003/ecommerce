@@ -1,54 +1,14 @@
 const express = require("express");
-
-const {
-    getAllProducts,
-    getProductById,
-    addProduct,
-    deleteProduct
-} = require("../controllers/productController");
-
+const product = require("../controllers/productController");
+const { requireAdmin } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
+router.get("/", product.getAllProducts);
+router.get("/:id", product.getProductById);
 
-// ===============================
-// GET ALL PRODUCTS
-// ===============================
-
-router.get(
-    "/",
-    getAllProducts
-);
-
-
-// ===============================
-// ADD PRODUCT
-// ===============================
-
-router.post(
-    "/",
-    addProduct
-);
-
-
-// ===============================
-// GET PRODUCT BY ID
-// ===============================
-
-router.get(
-    "/:id",
-    getProductById
-);
-
-
-// ===============================
-// DELETE PRODUCT
-// ===============================
-
-router.delete(
-    "/:id",
-    deleteProduct
-);
-
+router.post("/", requireAdmin, product.addProduct);
+router.put("/:id", requireAdmin, product.updateProduct);
+router.delete("/:id", requireAdmin, product.deleteProduct);
 
 module.exports = router;

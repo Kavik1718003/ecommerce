@@ -1,152 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Cartiva - Admin Login</title>
-
-    <link rel="stylesheet"
-          href="css/style.css">
-
-    <link rel="stylesheet"
-          href="css/auth.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b1530">
+    <meta name="robots" content="noindex">
+    <title>Admin login - Cartiva</title>
+    <link rel="icon" href="image/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
 </head>
-
-
 <body>
-
-
-    <!-- ===============================
-         NAVBAR
-    ================================ -->
-
-    <header class="navbar">
-
-        <div class="logo">
-            Cartiva Admin
-        </div>
-
-        <nav>
-
-            <a href="index.html">
-                Home
-            </a>
-
-            <a href="login.html">
-                Customer Login
-            </a>
-
-        </nav>
-
-    </header>
-
-
-    <!-- ===============================
-         ADMIN LOGIN
-    ================================ -->
-
-    <main class="auth-container">
-
-        <div class="auth-card">
-
-            <h1>
-                Admin Login
-            </h1>
-
-            <p>
-                Login to manage Cartiva
-            </p>
-
-
-            <form id="adminLoginForm">
-
-
-                <!-- EMAIL -->
-
-                <div class="form-group">
-
-                    <label for="adminEmail">
-                        Admin Email
-                    </label>
-
-                    <input
-                        type="email"
-                        id="adminEmail"
-                        placeholder="Enter admin email"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- PASSWORD -->
-
-                <div class="form-group">
-
-                    <label for="adminPassword">
-                        Password
-                    </label>
-
-                    <input
-                        type="password"
-                        id="adminPassword"
-                        placeholder="Enter password"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- LOGIN BUTTON -->
-
-                <button
-                    type="submit"
-                    class="auth-button"
-                >
-                    Login as Admin
-                </button>
-
-
-                <!-- MESSAGE -->
-
-                <p
-                    id="adminLoginMessage"
-                    class="form-message"
-                ></p>
-
-
-            </form>
-
-
-            <div class="auth-link">
-
-                <p>
-                    Customer?
-                    <a href="login.html">
-                        Login here
-                    </a>
-                </p>
-
+    <div class="auth-shell">
+        <aside class="auth-aside">
+            <a class="brand" href="index.html"><span class="brand-mark"><svg class="icon" viewBox="0 0 24 24"><path d="M5 8h14l1 13H4z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span>Cartiva</a>
+            <div>
+                <h2>Run your store with confidence.</h2>
+                <p>Manage products, orders, inventory and customers from one place.</p>
+                <ul>
+                    <li><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Live sales and order overview</li>
+                    <li><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Low-stock alerts and inventory control</li>
+                    <li><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Fulfil and track every order</li>
+                </ul>
             </div>
-
-
-        </div>
-
-    </main>
-
-
-    <!-- ===============================
-         JAVASCRIPT
-    ================================ -->
-
-    <script src="js/admin.js"></script>
-
+            <small>Restricted area · authorised staff only</small>
+        </aside>
+        <main class="auth-main" id="main">
+            <div class="auth-card">
+                <h1>Admin sign in</h1>
+                <p>Use your administrator account.</p>
+                <form id="admin-login-form" novalidate>
+                    <div id="form-error" class="alert alert-error" role="alert" hidden style="margin-bottom:16px"></div>
+                    <div class="field"><label for="email">Email</label>
+                        <input class="input" id="email" type="email" autocomplete="username" required></div>
+                    <div class="field"><label for="password">Password</label>
+                        <div class="input-group"><input class="input" id="password" type="password" autocomplete="current-password" required>
+                            <button class="btn btn-icon toggle" type="button" data-toggle="password" aria-label="Show password"></button></div></div>
+                    <button class="btn btn-lg btn-block" type="submit" id="submit">Sign in</button>
+                </form>
+                <p class="auth-foot"><a href="index.html">← Back to store</a></p>
+            </div>
+        </main>
+    </div>
+    <script src="js/admin-login.js"></script>
 </body>
-
 </html>

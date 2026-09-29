@@ -1,69 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Cartiva - Product Details</title>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/products.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1d4ed8">
+    <meta name="description" content="Product details">
+    <title>Product - Cartiva</title>
+    <link rel="icon" href="image/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/components.js"></script>
 </head>
-
-<body>
-
-    <header class="navbar">
-
-        <div class="logo">
-            Cartiva
+<body data-page="products">
+    <div id="site-header"></div>
+    <main id="main">
+        <div class="container section" style="padding-top:28px" id="product-root">
+            <div class="pdp">
+                <div class="skeleton" style="aspect-ratio:1;border-radius:20px"></div>
+                <div><div class="skeleton skel-line" style="width:40%"></div><div class="skeleton skel-line" style="height:36px;width:80%"></div><div class="skeleton skel-line" style="width:60%"></div></div>
+            </div>
         </div>
-
-        <nav>
-
-            <a href="products.html">
-                Products
-            </a>
-
-            <a href="cart.html">
-                Cart
-            </a>
-
-            <a href="orders.html">
-                Orders
-            </a>
-
-            <a href="profile.html">
-                Profile
-            </a>
-
-            <a href="login.html">
-                Logout
-            </a>
-
-        </nav>
-
-    </header>
-
-
-    <main class="products-container">
-
-        <div id="productDetails">
-
-            <p>
-                Loading product...
-            </p>
-
-        </div>
-
+        <section class="section" style="padding-top:0" id="related-section" hidden>
+            <div class="container">
+                <div class="section-head"><h2>You may also like</h2></div>
+                <div class="grid grid-products" id="related"></div>
+            </div>
+        </section>
     </main>
-
-
-    <script src="js/products.js"></script>
-
+    <div id="site-footer"></div>
+    <script src="js/product.js"></script>
 </body>
-
 </html>

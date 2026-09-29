@@ -1,23 +1,14 @@
 const express = require("express");
-
-const orderController =
-    require("../controllers/orderController");
+const order = require("../controllers/orderController");
+const { requireAuth } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
+router.use(requireAuth);
 
-// Create order
-router.post(
-    "/",
-    orderController.createOrder
-);
-
-
-// Get user orders
-router.get(
-    "/user/:userId",
-    orderController.getUserOrders
-);
-
+router.post("/", order.createOrder);
+router.get("/", order.getMyOrders);
+router.get("/:id", order.getOrder);
+router.put("/:id/cancel", order.cancelOrder);
 
 module.exports = router;
